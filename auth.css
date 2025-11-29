@@ -1,0 +1,242 @@
+/* ------------------------------------
+   AUTH PAGES STYLES
+   Separate CSS for login and signup pages
+------------------------------------ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #000000 0%, #333333 50%, #000000 100%);
+  font-family: 'Arial', sans-serif;
+}
+
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  margin: 0;
+}
+
+.auth-card {
+  background: #fff;
+  padding: 40px 35px;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  width: 100%;
+  max-width: 400px;
+  margin: 0;
+}
+
+.auth-card h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+  font-size: 24px;
+  font-weight: bold;
+  font-family: 'Arial', sans-serif;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+  font-weight: bold;
+  font-size: 14px;
+  font-family: 'Arial', sans-serif;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: all 0.3s;
+  background: #f9f9f9;
+  font-family: 'Arial', sans-serif;
+  height: 48px;
+}
+
+.form-group input:focus {
+  border-color: #333;
+  background: #fff;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(51, 51, 51, 0.1);
+}
+
+.auth-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #000000 0%, #333333 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+  font-family: 'Arial', sans-serif;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-btn:hover {
+  background: linear-gradient(135deg, #333333 0%, #000000 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.auth-links {
+  text-align: center;
+  margin-top: 25px;
+  font-family: 'Arial', sans-serif;
+}
+
+.auth-links a {
+  color: #333;
+  text-decoration: none;
+  transition: color 0.2s;
+  font-weight: 500;
+  font-family: 'Arial', sans-serif;
+}
+
+.auth-links a:hover {
+  color: #000;
+  text-decoration: underline;
+}
+
+.auth-links p {
+  margin-bottom: 10px;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+}
+
+.guest-btn {
+  width: 100%;
+  padding: 14px;
+  background: none;
+  color: #333;
+  border: 2px solid #333;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  font-family: 'Arial', sans-serif;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.guest-btn:hover {
+  background: #333;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.error-message {
+  background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
+  color: white;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  text-align: center;
+  display: none;
+  font-weight: 500;
+  font-family: 'Arial', sans-serif;
+}
+
+.logo-section {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.logo-section .logo {
+  color: #333;
+  text-decoration: none;
+  font-size: 28px;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Arial', sans-serif;
+}
+
+.logo-icon {
+  width: 120px;
+  height: 50px;
+  border-radius: 4px;
+}
+
+/* Remove default body margins and ensure full coverage */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+/* Responsive Design for Auth Pages */
+@media (max-width: 480px) {
+  .auth-container {
+    padding: 15px;
+  }
+  
+  .auth-card {
+    padding: 30px 25px;
+    margin: 0;
+  }
+  
+  .auth-card h2 {
+    font-size: 22px;
+  }
+  
+  .logo-section .logo {
+    font-size: 24px;
+  }
+  
+  .logo-icon {
+    width: 120px;
+    height: 50px;
+  }
+  
+  .form-group input {
+    padding: 12px 14px;
+    height: 46px;
+  }
+  
+  .auth-btn, .guest-btn {
+    padding: 12px;
+    height: 46px;
+  }
+}
+
+/* Ensure no white space around edges on very small screens */
+@media (max-width: 320px) {
+  .auth-container {
+    padding: 10px;
+  }
+  
+  .auth-card {
+    padding: 25px 20px;
+  }
+}

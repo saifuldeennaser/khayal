@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Khial Shop — Login</title>
+  <link rel="stylesheet" href="auth.css" />
+  <link rel="icon" type="image/x-icon" href="images/Screenshot 2025-11-29 195834.png">
+</head>
+<body>
+  <div class="auth-container">
+    <div class="auth-card">
+      <div class="logo-section">
+        <a href="index.html" class="logo">
+        <img src="images/Final logo-1.png" alt="Black & Gray Shop Logo" class="logo-icon">
+      </a>
+      </div>
+
+      <h2>Login to Your Account</h2>
+      
+      <div class="error-message" id="errorMessage"></div>
+      
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" required placeholder="Enter your email">
+        </div>
+        
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" required placeholder="Enter your password">
+        </div>
+        
+        <button type="submit" class="auth-btn">Login to Account</button>
+      </form>
+      
+      
+      <div class="auth-links">
+        <p>Don't have an account? <a href="signup.html">Create one here</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script src="firebase.js"></script>
+  <script src="auth.js"></script>
+  <script>
+// Prevent cached login page from being accessible after login
+if (window.auth && auth.currentUser) {
+  window.location.replace('index.html');
+}
+
+// Add this to every page EXCEPT index.html
+document.addEventListener('DOMContentLoaded', function() {
+  // Set navigation flag when loading other pages
+  if (!window.location.pathname.endsWith('index.html') && 
+      !window.location.pathname.endsWith('/') && 
+      window.location.pathname !== '') {
+    sessionStorage.setItem('isNavigation', 'true');
+  }
+});
+</script>
+</body>
+</html>

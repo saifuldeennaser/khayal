@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Khial Shop — Car Gadgets</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/x-icon" href="images/Screenshot 2025-11-29 195834.png">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="container nav-content">
+
+      <div class="nav-left">
+        <button class="menu-btn" id="menuBtn">
+          <span></span><span></span><span></span>
+        </button>
+
+        <a href="index.html" class="logo">
+        <img src="images/Final logo-2.png" alt="Black & Gray Shop Logo" class="logo-icon">
+      </a>
+      </div>
+
+      <nav class="nav-links" id="navLinks">
+  <a href="index.html">Home</a>
+  <a href="accessories.html">Accessories</a>
+  <a href="clothes.html">Clothes</a>
+  <a href="car-gadgets.html">Car Gadgets</a>
+  <a href="orders.html">My Orders</a>
+</nav>
+
+      <div class="nav-right">
+  <div class="user-menu" id="userMenu">
+    <!-- This will be populated by JavaScript -->
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </div>
+  <a href="cart.html" class="cart-btn" id="cartBtn">🛒 <span class="cart-count">0</span></a>
+</div>
+
+    </div>
+  </header>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="accessories.html">Accessories</a>
+    <a href="clothes.html">Clothes</a>
+    <a href="car-gadgets.html">Car Gadgets</a>
+    <a href="orders.html">My Orders</a>
+
+    <div class="mobile-user-menu" id="mobileUserMenu">
+  <span class="mobile-user-greeting" id="mobileUserGreeting">Hi, User</span>
+  <button class="mobile-logout-btn" onclick="logout()">Logout</button>
+</div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-text">
+      <h1 class="reveal">Car Gadgets</h1>
+      <p class="reveal delay-1">
+        Smart gadgets for your car — improve comfort and safety.
+      </p>
+
+      <div class="hero-cta reveal delay-2">
+        <a href="#products" class="btn-primary">Shop Car Gadgets</a>
+        <a href="index.html" class="btn-outline">Back to Home</a>
+      </div>
+    </div>
+
+    <div class="hero-img">
+      <div class="floating-card">
+        <img src="images/item4.jpg" alt="Car gadgets hero">
+        <span class="discount">Trending</span>
+      </div>
+    </div>
+  </section>
+
+ <!-- PRODUCTS GRID -->
+<section class="products container" id="products">
+  <div class="section-header reveal">
+    <h2>Our Products</h2>
+    <p>Discover our amazing collection</p>
+  </div>
+
+  <div class="product-grid" id="productGrid">
+    <!-- Products will be loaded dynamically from Firestore -->
+    <div class="loading-products">
+      <p>Loading products...</p>
+    </div>
+  </div>
+</section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>© 2025 Khial — All rights reserved.</p>
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script src="firebase.js"></script>
+<script src="auth.js"></script>
+<script src="app.js"></script>
+<script>
+  // Add this to every page EXCEPT index.html
+document.addEventListener('DOMContentLoaded', function() {
+  // Set navigation flag when loading other pages
+  if (!window.location.pathname.endsWith('index.html') && 
+      !window.location.pathname.endsWith('/') && 
+      window.location.pathname !== '') {
+    sessionStorage.setItem('isNavigation', 'true');
+  }
+});
+</script>
+</body>
+</html>

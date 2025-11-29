@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Khial Shop — Admin Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="admin.css" />
+  <link rel="icon" type="image/x-icon" href="images/Screenshot 2025-11-29 195834.png">
+</head>
+<body class="admin-body">
+
+  <!-- ADMIN NAVBAR -->
+  <header class="admin-navbar">
+    <div class="container admin-nav-content">
+      <div class="admin-nav-left">
+        <button class="admin-menu-btn" id="adminMenuBtn">
+          <span></span><span></span><span></span>
+        </button>
+        <a href="index.html" class="logo">
+        <img src="images/Final logo-2.png" alt="Black & Gray Shop Logo" class="logo-icon">
+      </a>
+      </div>
+
+      <div class="admin-nav-right">
+        <span class="admin-welcome">Welcome, Admin</span>
+        <button class="admin-logout-btn" onclick="adminLogout()">Logout</button>
+        <a href="index.html" class="view-site-btn">View Site</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ADMIN SIDEBAR -->
+  <div class="admin-sidebar" id="adminSidebar">
+    <nav class="sidebar-nav">
+      <a href="#dashboard" class="sidebar-link active" data-tab="dashboard">
+        <span>📊</span> Dashboard
+      </a>
+      <a href="#orders" class="sidebar-link" data-tab="orders">
+        <span>📦</span> Orders
+        <span class="order-badge" id="pendingOrdersCount">0</span>
+      </a>
+      <a href="#products" class="sidebar-link" data-tab="products">
+        <span>🛍️</span> Products
+      </a>
+      <a href="#customers" class="sidebar-link" data-tab="customers">
+        <span>👥</span> Customers
+      </a>
+      <a href="#analytics" class="sidebar-link" data-tab="analytics">
+        <span>📈</span> Analytics
+      </a>
+      <a href="#settings" class="sidebar-link" data-tab="settings">
+        <span>⚙️</span> Settings
+      </a>
+    </nav>
+
+    <!-- Mobile Admin Controls -->
+    <div class="mobile-admin-controls">
+      <span class="admin-welcome">Hi, Admin</span>
+      <a href="index.html" class="view-site-btn">View Site</a>
+      <button class="admin-logout-btn" onclick="adminLogout()">Logout</button>
+    </div>
+  </div>
+
+  <!-- ADMIN MAIN CONTENT -->
+  <main class="admin-main" id="adminMain">
+    
+    <!-- DASHBOARD TAB -->
+    <div class="admin-tab active" id="dashboard-tab">
+      <div class="tab-header">
+        <h1>Dashboard Overview</h1>
+        <p>Welcome to your admin dashboard</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">💰</div>
+          <div class="stat-info">
+            <h3 id="totalRevenue">$0.00</h3>
+            <p>Total Revenue</p>
+          </div>
+          <div class="stat-trend up">+12%</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">📦</div>
+          <div class="stat-info">
+            <h3 id="totalOrders">0</h3>
+            <p>Total Orders</p>
+          </div>
+          <div class="stat-trend up">+8%</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">⏳</div>
+          <div class="stat-info">
+            <h3 id="pendingOrders">0</h3>
+            <p>Pending Orders</p>
+          </div>
+          <div class="stat-trend down">-3%</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">✅</div>
+          <div class="stat-info">
+            <h3 id="completedOrders">0</h3>
+            <p>Delivered Orders</p>
+          </div>
+          <div class="stat-trend up">+15%</div>
+        </div>
+      </div>
+
+      <div class="dashboard-content">
+        <div class="recent-orders-card">
+          <div class="card-header">
+            <h3>Recent Orders</h3>
+            <a href="#orders" class="view-all-link">View All</a>
+          </div>
+          <div class="recent-orders-list" id="recentOrdersList">
+            <!-- Recent orders will be loaded here -->
+          </div>
+        </div>
+
+        <div class="quick-stats-card">
+          <div class="card-header">
+            <h3>Quick Stats</h3>
+          </div>
+          <div class="quick-stats">
+            <div class="quick-stat">
+              <span class="stat-label">Today's Revenue</span>
+              <span class="stat-value" id="todayRevenue">$0.00</span>
+            </div>
+            <div class="quick-stat">
+              <span class="stat-label">This Week</span>
+              <span class="stat-value" id="weekRevenue">$0.00</span>
+            </div>
+            <div class="quick-stat">
+              <span class="stat-label">This Month</span>
+              <span class="stat-value" id="monthRevenue">$0.00</span>
+            </div>
+            <div class="quick-stat">
+              <span class="stat-label">Avg. Order Value</span>
+              <span class="stat-value" id="avgOrderValue">$0.00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ORDERS TAB -->
+    <div class="admin-tab" id="orders-tab">
+      <div class="tab-header">
+        <h1>Order Management</h1>
+        <p>Manage and track all customer orders</p>
+      </div>
+
+      <div class="orders-controls">
+        <div class="filter-buttons">
+          <button class="filter-btn active" data-status="all">All Orders</button>
+          <button class="filter-btn" data-status="pending">Pending</button>
+          <button class="filter-btn" data-status="confirmed">Confirmed</button>
+          <button class="filter-btn" data-status="delivered">Delivered</button>
+        </div>
+      </div>
+      
+      <div class="orders-table-container">
+        <table class="orders-table" id="ordersTable">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Date</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="ordersTableBody">
+            <!-- Orders will be loaded here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PRODUCTS TAB -->
+    <div class="admin-tab" id="products-tab">
+      <div class="tab-header">
+        <h1>Product Management</h1>
+        <p>Manage your product catalog</p>
+        <button class="btn-primary" id="addProductBtn">+ Add Product</button>
+      </div>
+
+      <div class="products-grid" id="productsGrid">
+        <!-- Products will be loaded here -->
+      </div>
+    </div>
+
+    <!-- CUSTOMERS TAB -->
+    <div class="admin-tab" id="customers-tab">
+      <div class="tab-header">
+        <h1>Customer Management</h1>
+        <p>View and manage your customers</p>
+      </div>
+
+      <div class="customers-table-container">
+        <table class="customers-table" id="customersTable">
+          <thead>
+            <tr>
+              <th>Customer ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Orders</th>
+              <th>Total Spent</th>
+              <th>Last Order</th>
+            </tr>
+          </thead>
+          <tbody id="customersTableBody">
+            <!-- Customers will be loaded here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ANALYTICS TAB -->
+    <div class="admin-tab" id="analytics-tab">
+      <div class="tab-header">
+        <h1>Sales Analytics</h1>
+        <p>Track your store performance</p>
+      </div>
+
+      <div class="analytics-content">
+        <div class="chart-container">
+          <div class="chart-card">
+            <h3>Revenue Overview</h3>
+            <div class="chart-placeholder">
+              <p>Revenue chart will be displayed here</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="analytics-stats">
+          <div class="analytics-stat">
+            <h4>Top Selling Products</h4>
+            <div id="topProductsList">
+              <!-- Top products will be loaded here -->
+            </div>
+          </div>
+          <div class="analytics-stat">
+            <h4>Order Status Distribution</h4>
+            <div id="orderStatusChart">
+              <!-- Status chart will be loaded here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SETTINGS TAB -->
+    <div class="admin-tab" id="settings-tab">
+      <div class="tab-header">
+        <h1>Store Settings</h1>
+        <p>Configure your store settings</p>
+      </div>
+
+      <div class="settings-content">
+        <div class="settings-card">
+          <h3>Store Information</h3>
+          <form class="settings-form">
+            <div class="form-group">
+              <label>Store Name</label>
+              <input type="text" value="Khial Shop" readonly>
+            </div>
+            <div class="form-group">
+              <label>Contact Email</label>
+              <input type="email" placeholder="admin@khialshop.com">
+            </div>
+            <div class="form-group">
+              <label>Store Description</label>
+              <textarea placeholder="Enter store description">Premium fashion and accessories store</textarea>
+            </div>
+            <button type="submit" class="btn-primary">Save Changes</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ORDER DETAILS MODAL -->
+  <div class="admin-modal" id="orderDetailsModal">
+    <div class="admin-modal-content">
+      <div class="admin-modal-header">
+        <h2>Order Details</h2>
+        <button class="close-admin-modal">&times;</button>
+      </div>
+      <div class="admin-modal-body" id="orderDetailsContent">
+        <!-- Order details will be loaded here -->
+      </div>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script src="firebase.js"></script>
+  <script src="admin.js"></script>
+  <script>
+// Simple admin auth check - TEMPORARY FIX
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('Admin page loading...');
+  
+  // Wait a bit for Firebase to initialize
+  setTimeout(function() {
+    if (window.auth && auth.currentUser) {
+      console.log('User is logged in, loading admin dashboard');
+      // Load admin scripts
+      const adminScript = document.createElement('script');
+      adminScript.src = 'admin.js';
+      document.body.appendChild(adminScript);
+    } else {
+      console.log('User not logged in, redirecting to login');
+      localStorage.setItem('returnUrl', 'admin.html');
+      window.location.href = 'login.html';
+    }
+  }, 1500);
+});
+
+// Add this to every page EXCEPT index.html
+document.addEventListener('DOMContentLoaded', function() {
+  // Set navigation flag when loading other pages
+  if (!window.location.pathname.endsWith('index.html') && 
+      !window.location.pathname.endsWith('/') && 
+      window.location.pathname !== '') {
+    sessionStorage.setItem('isNavigation', 'true');
+  }
+});
+</script>
+</body>
+</html>

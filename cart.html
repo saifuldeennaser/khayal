@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>khial Shop — Shopping Cart</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/x-icon" href="images/Screenshot 2025-11-29 195834.png">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container nav-content">
+
+      <div class="nav-left">
+        <button class="menu-btn" id="menuBtn">
+          <span></span><span></span><span></span>
+        </button>
+
+        <a href="index.html" class="logo">
+        <img src="images/Final logo-2.png" alt="Black & Gray Shop Logo" class="logo-icon">
+      </a>
+      </div>
+
+      <nav class="nav-links" id="navLinks">
+  <a href="index.html">Home</a>
+  <a href="accessories.html">Accessories</a>
+  <a href="clothes.html">Clothes</a>
+  <a href="car-gadgets.html">Car Gadgets</a>
+  <a href="orders.html">My Orders</a>
+</nav>
+
+      <div class="nav-right">
+  <div class="user-menu" id="userMenu">
+    <!-- This will be hidden on main site pages -->
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </div>
+  <a href="cart.html" class="cart-btn" id="cartBtn">🛒 <span class="cart-count">0</span></a>
+</div>
+
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="accessories.html">Accessories</a>
+    <a href="clothes.html">Clothes</a>
+    <a href="car-gadgets.html">Car Gadgets</a>
+    <a href="orders.html">My Orders</a>
+
+    <div class="mobile-user-menu" id="mobileUserMenu">
+  <span class="mobile-user-greeting" id="mobileUserGreeting">Hi, User</span>
+  <button class="mobile-logout-btn" onclick="logout()">Logout</button>
+</div>
+  </div>
+
+<section class="cart-section container">
+  <div class="section-header reveal">
+    <h1>Your Shopping Cart</h1>
+    <p id="cart-status">You have 0 items in your cart.</p>
+  </div>
+
+  <div class="cart-grid">
+    <div class="cart-items" id="cartItemsContainer">
+      <!-- Cart items will be dynamically inserted here -->
+    </div>
+
+    <div class="cart-summary reveal delay-1">
+      <h2>Order Summary</h2>
+      <p>Subtotal: <span id="cartSubtotal">$0.00</span></p>
+      <p>Shipping: <span>Free</span></p>
+      <h3>Total: <span id="cartTotal">$0.00</span></h3>
+      <button class="btn-primary checkout-btn">Proceed to Checkout</button>
+      <button class="btn-outline clear-cart-btn" id="clearCartBtn">Clear Cart</button>
+      <a href="index.html" class="btn-outline continue-shopping">Continue Shopping</a>
+    </div>
+  </div>
+</section>
+
+<!-- CHECKOUT MODAL -->
+<div class="checkout-modal" id="checkoutModal">
+  <div class="checkout-modal-content">
+    <div class="checkout-header">
+      <h2>Complete Your Order</h2>
+      <button class="close-modal" id="closeCheckoutModal">&times;</button>
+    </div>
+    
+    <form id="checkoutForm" class="checkout-form">
+      <div class="form-group">
+        <label for="customerName">Full Name *</label>
+        <input type="text" id="customerName" name="customerName" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="customerEmail">Email Address *</label>
+        <input type="email" id="customerEmail" name="customerEmail" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="customerPhone">Phone Number *</label>
+        <input type="tel" id="customerPhone" name="customerPhone" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="customerAddress">Delivery Address *</label>
+        <textarea id="customerAddress" name="customerAddress" rows="3" required placeholder="Enter your complete delivery address"></textarea>
+      </div>
+      
+      <div class="form-group">
+        <label for="orderNotes">Order Notes (Optional)</label>
+        <textarea id="orderNotes" name="orderNotes" rows="3" placeholder="Any special instructions for delivery?"></textarea>
+      </div>
+      
+      <div class="order-summary">
+        <h3>Order Summary</h3>
+        <div id="modalOrderSummary">
+          <!-- Order items will be dynamically inserted here -->
+        </div>
+        <div class="order-total">
+          <strong>Total: <span id="modalTotalPrice">$0.00</span></strong>
+        </div>
+      </div>
+      
+      <button type="submit" class="btn-primary submit-order-btn">Place Order</button>
+    </form>
+  </div>
+</div>
+
+  <footer class="footer">
+    <p>© 2025 Khial — All rights reserved.</p>
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script src="firebase.js"></script>
+<script src="auth.js"></script>
+<script src="app.js"></script>
+<script>
+// Check if user is authenticated when page loads
+document.addEventListener('DOMContentLoaded', function() {
+  // Wait for Firebase to initialize
+  setTimeout(function() {
+    if (window.auth) {
+      auth.onAuthStateChanged(function(user) {
+        if (!user) {
+          // If not logged in, redirect to login page
+          window.location.href = 'login.html';
+        }
+      });
+      
+      // Also check immediately in case auth state doesn't change
+      if (!auth.currentUser) {
+        window.location.href = 'login.html';
+      }
+    } else {
+      // If Firebase auth is not available, redirect to login
+      window.location.href = 'login.html';
+    }
+  }, 1000);
+});
+
+// Add this to every page EXCEPT index.html
+document.addEventListener('DOMContentLoaded', function() {
+  // Set navigation flag when loading other pages
+  if (!window.location.pathname.endsWith('index.html') && 
+      !window.location.pathname.endsWith('/') && 
+      window.location.pathname !== '') {
+    sessionStorage.setItem('isNavigation', 'true');
+  }
+});
+</script>
+</body>
+</html>
